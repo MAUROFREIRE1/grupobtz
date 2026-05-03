@@ -2,12 +2,18 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - name: Set up Python
-        uses: actions/setup-python@v4
-        with:
-          python-version: '3.x' # Ou uma versão específica como '3.10'
-      - name: Install dependencies # Este é o passo crucial!
-        run: |
-          python -m pip install --upgrade pip
-          pip install -r requirements.txt # Ou o nome do seu arquivo, como 'requeriments.txt'
+    - uses: actions/checkout@v4
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.x' # Use a versão do Python que seu app precisa, por exemplo, '3.10'
+
+    # --- NOVO PASSO ADICIONADO AQUI ---
+    - name: Install zlib-dev
+      run: sudo apt-get update && sudo apt-get install -y zlib1g-dev
+    # ----------------------------------
+
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
